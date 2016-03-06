@@ -47,7 +47,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.binary.Base64;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -126,12 +125,12 @@ public class GitHub {
         if (null != connector) this.connector = connector;
 
         if (oauthAccessToken!=null) {
-            encodedAuthorization = "token "+oauthAccessToken;
+            encodedAuthorization = "token " + oauthAccessToken;
         } else {
             if (password!=null) {
                 String authorization = (login + ':' + password);
-                Charset charset = Charsets.UTF_8;
-                encodedAuthorization = "Basic "+new String(Base64.encodeBase64(authorization.getBytes(charset)), charset);
+                Charset charset = Charset.forName("UTF-8");
+                encodedAuthorization = "Basic " + new String(Base64.encodeBase64(authorization.getBytes(charset)), charset);
             } else {// anonymous access
                 encodedAuthorization = null;
             }
