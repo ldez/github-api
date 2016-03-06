@@ -221,7 +221,7 @@ public class GHIssue extends GHObject {
     }
 
     protected String getIssuesApiRoute() {
-        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/issues/" + number;
+        return String.format("/repos/%s/%s/issues/%s", owner.getOwnerName(), owner.getName(), number);
     }
 
     public GHUser getAssignee() {

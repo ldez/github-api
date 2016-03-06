@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import static java.lang.String.format;
+
 /**
  * A team in GitHub organization.
  * 
@@ -72,7 +74,7 @@ public class GHTeam {
      */
     public boolean hasMember(GHUser user) {
         try {
-            org.root.retrieve().to("/teams/" + id + "/members/"  + user.getLogin());
+            org.root.retrieve().to(format("/teams/%d/members/%s", id, user.getLogin()));
             return true;
         } catch (IOException ignore) {
             return false;
@@ -120,15 +122,15 @@ public class GHTeam {
     }
 
     public void add(GHRepository r) throws IOException {
-        org.root.retrieve().method("PUT").to(api("/repos/" + r.getOwnerName() + '/' + r.getName()), null);
+        org.root.retrieve().method("PUT").to(api(format("/repos/%s/%s", r.getOwnerName(), r.getName())), null);
     }
 
     public void remove(GHRepository r) throws IOException {
-        org.root.retrieve().method("DELETE").to(api("/repos/" + r.getOwnerName() + '/' + r.getName()), null);
+        org.root.retrieve().method("DELETE").to(api(format("/repos/%s/%s", r.getOwnerName(), r.getName())), null);
     }
 
     private String api(String tail) {
-        return "/teams/"+id+tail;
+        return format("/teams/%s%s", id, tail);
     }
 
     public GHOrganization getOrganization() {

@@ -2,6 +2,8 @@ package org.kohsuke.github;
 
 import java.io.IOException;
 
+import static java.lang.String.format;
+
 public class GHDeploymentStatusBuilder {
     private final Requester builder;
     private GHRepository repo;
@@ -25,6 +27,6 @@ public class GHDeploymentStatusBuilder {
     }
 
     public GHDeploymentStatus create() throws IOException {
-        return builder.to(repo.getApiTailUrl("deployments")+"/"+deploymentId+"/statuses",GHDeploymentStatus.class).wrap(repo);
+        return builder.to(format("%s/%s/statuses", repo.getApiTailUrl("deployments"), deploymentId), GHDeploymentStatus.class).wrap(repo);
     }
 }

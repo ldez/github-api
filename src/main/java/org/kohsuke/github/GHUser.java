@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.lang.String.format;
+
 /**
  * Represents an user of GitHub.
  *
@@ -155,7 +157,7 @@ public class GHUser extends GHPerson {
     public GHPersonSet<GHOrganization> getOrganizations() throws IOException {
         GHPersonSet<GHOrganization> orgs = new GHPersonSet<GHOrganization>();
         Set<String> names = new HashSet<String>();
-        for (GHOrganization o : root.retrieve().to("/users/" + login + "/orgs", GHOrganization[].class)) {
+        for (GHOrganization o : root.retrieve().to(format("/users/%s/orgs", login), GHOrganization[].class)) {
             if (names.add(o.getLogin()))    // I've seen some duplicates in the data
                 orgs.add(root.getOrganization(o.getLogin()));
         }
@@ -168,7 +170,7 @@ public class GHUser extends GHPerson {
     public PagedIterable<GHEventInfo> listEvents() throws IOException {
         return new PagedIterable<GHEventInfo>() {
             public PagedIterator<GHEventInfo> _iterator(int pageSize) {
-                return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(String.format("/users/%s/events", login), GHEventInfo[].class, pageSize)) {
+                return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(format("/users/%s/events", login), GHEventInfo[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHEventInfo[] page) {
                         for (GHEventInfo c : page)
@@ -185,7 +187,7 @@ public class GHUser extends GHPerson {
     public PagedIterable<GHGist> listGists() throws IOException {
         return new PagedIterable<GHGist>() {
             public PagedIterator<GHGist> _iterator(int pageSize) {
-                return new PagedIterator<GHGist>(root.retrieve().asIterator(String.format("/users/%s/gists", login), GHGist[].class, pageSize)) {
+                return new PagedIterator<GHGist>(root.retrieve().asIterator(format("/users/%s/gists", login), GHGist[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHGist[] page) {
                         for (GHGist c : page)

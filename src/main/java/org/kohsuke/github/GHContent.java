@@ -222,7 +222,7 @@ public class GHContent {
     }
 
     private String getApiRoute() {
-        return "/repos/" + repository.getOwnerName() + "/" + repository.getName() + "/contents/" + path;
+        return String.format("/repos/%s/%s/contents/%s", repository.getOwnerName(), repository.getName(), path);
     }
 
     GHContent wrap(GHRepository owner) {

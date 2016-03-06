@@ -83,7 +83,7 @@ public class GHAsset extends GHObject {
 
 
     private String getApiRoute() {
-        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/releases/assets/" + id;
+        return String.format("/repos/%s/%s/releases/assets/%s", owner.getOwnerName(), owner.getName(), id);
     }
 
     GHAsset wrap(GHRelease release) {

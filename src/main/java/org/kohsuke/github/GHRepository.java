@@ -38,6 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.*;
 
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
 /**
@@ -76,7 +77,7 @@ public class GHRepository extends GHObject {
     public PagedIterable<GHDeploymentStatus> getDeploymentStatuses(final int id) {
         return new PagedIterable<GHDeploymentStatus>() {
             public PagedIterator<GHDeploymentStatus> _iterator(int pageSize) {
-                return new PagedIterator<GHDeploymentStatus>(root.retrieve().asIterator(getApiTailUrl("deployments")+"/"+id+"/statuses", GHDeploymentStatus[].class, pageSize)) {
+                return new PagedIterator<GHDeploymentStatus>(root.retrieve().asIterator(format("%s/%s/statuses", getApiTailUrl("deployments"), id), GHDeploymentStatus[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHDeploymentStatus[] page) {
                         for (GHDeploymentStatus deploymentStatus : page)
@@ -680,7 +681,7 @@ public class GHRepository extends GHObject {
      * @throws IOException on failure communicating with GitHub
      */
     public GHCompare getCompare(String id1, String id2) throws IOException {
-        GHCompare compare = root.retrieve().to(getApiTailUrl(String.format("compare/%s...%s", id1, id2)), GHCompare.class);
+        GHCompare compare = root.retrieve().to(getApiTailUrl(format("compare/%s...%s", id1, id2)), GHCompare.class);
         return compare.wrap(this);
     }
 
@@ -698,8 +699,8 @@ public class GHRepository extends GHObject {
             String ownerName1 = owner1.getOwnerName();
             String ownerName2 = owner2.getOwnerName();
             if (!StringUtils.equals(ownerName1, ownerName2)) {
-                String qualifiedName1 = String.format("%s:%s", ownerName1, id1.getName());
-                String qualifiedName2 = String.format("%s:%s", ownerName2, id2.getName());
+                String qualifiedName1 = format("%s:%s", ownerName1, id1.getName());
+                String qualifiedName2 = format("%s:%s", ownerName2, id2.getName());
                 return getCompare(qualifiedName1, qualifiedName2);
             }
         }
@@ -714,7 +715,7 @@ public class GHRepository extends GHObject {
      * @throws IOException on failure communicating with GitHub
      */
     public GHRef[] getRefs() throws IOException {
-       return GHRef.wrap(root.retrieve().to(String.format("/repos/%s/%s/git/refs", owner.login, name), GHRef[].class), root);
+       return GHRef.wrap(root.retrieve().to(format("/repos/%s/%s/git/refs", owner.login, name), GHRef[].class), root);
     }
 
     /**
@@ -724,7 +725,7 @@ public class GHRepository extends GHObject {
      * @throws IOException on failure communicating with GitHub, potentially due to an invalid ref type being requested
      */
     public GHRef[] getRefs(String refType) throws IOException {
-        return GHRef.wrap(root.retrieve().to(String.format("/repos/%s/%s/git/refs/%s", owner.login, name, refType), GHRef[].class),root);
+        return GHRef.wrap(root.retrieve().to(format("/repos/%s/%s/git/refs/%s", owner.login, name, refType), GHRef[].class),root);
     }
     /**
      * Retrive a ref of the given type for the current GitHub repository.
@@ -737,7 +738,7 @@ public class GHRepository extends GHObject {
      *             invalid ref type being requested
      */
     public GHRef getRef(String refName) throws IOException {
-        return root.retrieve().to(String.format("/repos/%s/%s/git/refs/%s", owner.login, name, refName), GHRef.class).wrap(root);
+        return root.retrieve().to(format("/repos/%s/%s/git/refs/%s", owner.login, name, refName), GHRef.class).wrap(root);
     }
     /**
      * Retrive a tree of the given type for the current GitHub repository.
@@ -749,7 +750,7 @@ public class GHRepository extends GHObject {
      *             invalid tree type being requested
      */
     public GHTree getTree(String sha) throws IOException {
-        String url = String.format("/repos/%s/%s/git/trees/%s", owner.login, name, sha);
+        String url = format("/repos/%s/%s/git/trees/%s", owner.login, name, sha);
         return root.retrieve().to(url, GHTree.class).wrap(root);
     }
 
@@ -764,7 +765,7 @@ public class GHRepository extends GHObject {
      *             invalid tree type being requested
      */
     public GHTree getTreeRecursive(String sha, int recursive) throws IOException {
-        String url = String.format("/repos/%s/%s/git/trees/%s?recursive=%d", owner.login, name, sha, recursive);
+        String url = format("/repos/%s/%s/git/trees/%s?recursive=%d", owner.login, name, sha, recursive);
         return root.retrieve().to(url, GHTree.class).wrap(root);
     }
 
@@ -774,7 +775,7 @@ public class GHRepository extends GHObject {
     public GHCommit getCommit(String sha1) throws IOException {
         GHCommit commit = commits.get(sha1);
         if (commit == null) {
-            commit = root.retrieve().to(String.format("/repos/%s/%s/commits/%s", owner.login, name, sha1), GHCommit.class).wrapUp(this);
+            commit = root.retrieve().to(format("/repos/%s/%s/commits/%s", owner.login, name, sha1), GHCommit.class).wrapUp(this);
             commits.put(sha1, commit);
         }
         return commit;
@@ -786,7 +787,7 @@ public class GHRepository extends GHObject {
     public PagedIterable<GHCommit> listCommits() {
         return new PagedIterable<GHCommit>() {
             public PagedIterator<GHCommit> _iterator(int pageSize) {
-                return new PagedIterator<GHCommit>(root.retrieve().asIterator(String.format("/repos/%s/%s/commits", owner.login, name), GHCommit[].class, pageSize)) {
+                return new PagedIterator<GHCommit>(root.retrieve().asIterator(format("/repos/%s/%s/commits", owner.login, name), GHCommit[].class, pageSize)) {
                     protected void wrapUp(GHCommit[] page) {
                         for (GHCommit commit : page)
                             commit.wrapUp(GHRepository.this);
@@ -809,7 +810,7 @@ public class GHRepository extends GHObject {
     public PagedIterable<GHCommitComment> listCommitComments() {
         return new PagedIterable<GHCommitComment>() {
             public PagedIterator<GHCommitComment> _iterator(int pageSize) {
-                return new PagedIterator<GHCommitComment>(root.retrieve().asIterator(String.format("/repos/%s/%s/comments", owner.login, name), GHCommitComment[].class, pageSize)) {
+                return new PagedIterator<GHCommitComment>(root.retrieve().asIterator(format("/repos/%s/%s/comments", owner.login, name), GHCommitComment[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHCommitComment[] page) {
                         for (GHCommitComment commitComment : page)
@@ -826,7 +827,7 @@ public class GHRepository extends GHObject {
     public PagedIterable<GHCommitStatus> listCommitStatuses(final String sha1) throws IOException {
         return new PagedIterable<GHCommitStatus>() {
             public PagedIterator<GHCommitStatus> _iterator(int pageSize) {
-                return new PagedIterator<GHCommitStatus>(root.retrieve().asIterator(String.format("/repos/%s/%s/statuses/%s", owner.login, name, sha1), GHCommitStatus[].class, pageSize)) {
+                return new PagedIterator<GHCommitStatus>(root.retrieve().asIterator(format("/repos/%s/%s/statuses/%s", owner.login, name, sha1), GHCommitStatus[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHCommitStatus[] page) {
                         for (GHCommitStatus commitStatus : page)
@@ -861,7 +862,7 @@ public class GHRepository extends GHObject {
                 .with("target_url", targetUrl)
                 .with("description", description)
                 .with("context", context)
-                .to(String.format("/repos/%s/%s/statuses/%s",owner.login,this.name,sha1),GHCommitStatus.class).wrapUp(root);
+                .to(format("/repos/%s/%s/statuses/%s", owner.login, this.name, sha1),GHCommitStatus.class).wrapUp(root);
     }
 
     /**
@@ -877,7 +878,7 @@ public class GHRepository extends GHObject {
     public PagedIterable<GHEventInfo> listEvents() throws IOException {
         return new PagedIterable<GHEventInfo>() {
             public PagedIterator<GHEventInfo> _iterator(int pageSize) {
-                return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(String.format("/repos/%s/%s/events", owner.login, name), GHEventInfo[].class, pageSize)) {
+                return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(format("/repos/%s/%s/events", owner.login, name), GHEventInfo[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHEventInfo[] page) {
                         for (GHEventInfo eventInfo : page)
@@ -1335,6 +1336,6 @@ public class GHRepository extends GHObject {
 
     String getApiTailUrl(String tail) {
         if (tail.length()>0 && !tail.startsWith("/"))    tail='/'+tail;
-        return "/repos/" + owner.login + "/" + name +tail;
+        return format("/repos/%s/%s%s", owner.login, name, tail);
     }
 }

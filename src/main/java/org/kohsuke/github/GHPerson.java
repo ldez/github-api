@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static java.lang.String.format;
+
 /**
  * Common part of {@link GHUser} and {@link GHOrganization}.
  * 
@@ -77,7 +79,7 @@ public abstract class GHPerson extends GHObject {
     public PagedIterable<GHRepository> listRepositories(final int pageSize) {
         return new PagedIterable<GHRepository>() {
             public PagedIterator<GHRepository> _iterator(int pageSize) {
-                return new PagedIterator<GHRepository>(root.retrieve().asIterator("/users/" + login + "/repos?per_page=" + pageSize, GHRepository[].class, pageSize)) {
+                return new PagedIterator<GHRepository>(root.retrieve().asIterator(format("/users/%s/repos?per_page=%d", login, pageSize), GHRepository[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHRepository[] page) {
                         for (GHRepository c : page)
@@ -104,7 +106,7 @@ public abstract class GHPerson extends GHObject {
     public synchronized Iterable<List<GHRepository>> iterateRepositories(final int pageSize) {
         return new Iterable<List<GHRepository>>() {
             public Iterator<List<GHRepository>> iterator() {
-                final Iterator<GHRepository[]> pager = root.retrieve().asIterator("/users/" + login + "/repos?per_page="+pageSize,GHRepository[].class, pageSize);
+                final Iterator<GHRepository[]> pager = root.retrieve().asIterator(format("/users/%s/repos?per_page=%d", login, pageSize),GHRepository[].class, pageSize);
 
                 return new Iterator<List<GHRepository>>() {
                     public boolean hasNext() {
@@ -133,7 +135,7 @@ public abstract class GHPerson extends GHObject {
      */
     public GHRepository getRepository(String name) throws IOException {
         try {
-            return root.retrieve().to("/repos/" + login + '/' + name, GHRepository.class).wrap(root);
+            return root.retrieve().to(format("/repos/%s/%s", login, name), GHRepository.class).wrap(root);
         } catch (FileNotFoundException e) {
             return null;
         }

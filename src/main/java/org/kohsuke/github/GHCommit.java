@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.String.format;
+
 /**
  * A commit in a repository.
  *
@@ -286,7 +288,7 @@ public class GHCommit {
     public PagedIterable<GHCommitComment> listComments() {
         return new PagedIterable<GHCommitComment>() {
             public PagedIterator<GHCommitComment> _iterator(int pageSize) {
-                return new PagedIterator<GHCommitComment>(owner.root.retrieve().asIterator(String.format("/repos/%s/%s/commits/%s/comments", owner.getOwnerName(), owner.getName(), sha), GHCommitComment[].class, pageSize)) {
+                return new PagedIterator<GHCommitComment>(owner.root.retrieve().asIterator(format("/repos/%s/%s/commits/%s/comments", owner.getOwnerName(), owner.getName(), sha), GHCommitComment[].class, pageSize)) {
                     @Override
                     protected void wrapUp(GHCommitComment[] page) {
                         for (GHCommitComment c : page)
@@ -308,7 +310,7 @@ public class GHCommit {
                 .with("path",path)
                 .with("line",line)
                 .with("position",position)
-                .to(String.format("/repos/%s/%s/commits/%s/comments",owner.getOwnerName(),owner.getName(),sha),GHCommitComment.class);
+                .to(format("/repos/%s/%s/commits/%s/comments", owner.getOwnerName(), owner.getName(), sha),GHCommitComment.class);
         return r.wrap(owner);
     }
 

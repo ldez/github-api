@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import static java.lang.String.format;
+
 /**
  * Represents the account that's logging into GitHub.
  *
@@ -95,8 +97,8 @@ public class GHMyself extends GHUser {
      *      Always non-null.
      */
   public List<GHVerifiedKey> getPublicVerifiedKeys() throws IOException {
-    return Collections.unmodifiableList(Arrays.asList(root.retrieve().to(
-        "/users/" + getLogin() + "/keys", GHVerifiedKey[].class)));
+    return Collections.unmodifiableList(Arrays.asList(root.retrieve()
+            .to(format("/users/%s/keys", getLogin()), GHVerifiedKey[].class)));
   }
 
     /**

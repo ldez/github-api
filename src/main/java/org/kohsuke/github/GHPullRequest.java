@@ -75,7 +75,7 @@ public class GHPullRequest extends GHIssue {
 
     @Override
     protected String getApiRoute() {
-        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/pulls/" + number;
+        return String.format("/repos/%s/%s/pulls/%s", owner.getOwnerName(), owner.getName(), number);
     }
 
     /**

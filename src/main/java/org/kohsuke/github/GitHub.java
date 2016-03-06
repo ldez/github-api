@@ -25,6 +25,7 @@ package org.kohsuke.github;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import static java.lang.String.format;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -331,7 +332,7 @@ public class GitHub {
      */
     public GHRepository getRepository(String name) throws IOException {
         String[] tokens = name.split("/");
-        return retrieve().to("/repos/" + tokens[0] + '/' + tokens[1], GHRepository.class).wrap(this);
+        return retrieve().to(format("/repos/%s/%s", tokens[0], tokens[1]), GHRepository.class).wrap(this);
     }
 
     /**

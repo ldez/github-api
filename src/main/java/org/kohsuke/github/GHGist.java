@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static java.lang.String.format;
+
 /**
  * Gist
  *
@@ -116,7 +118,7 @@ public class GHGist extends GHObject {
         }
     }
     String getApiTailUrl(String tail) {
-        return "/gists/" + id + '/' + tail;
+        return format("/gists/%s/%s", id, tail);
     }
 
     public void star() throws IOException {
