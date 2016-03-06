@@ -5,7 +5,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * The model user for comparing 2 commits in the GitHub API.
