@@ -149,7 +149,7 @@ public class GHIssue extends GHObject {
      */
     @WithBridgeMethods(void.class)
     public GHIssueComment comment(String message) throws IOException {
-        GHIssueComment r = new Requester(root).with("body",message).to(getIssuesApiRoute() + "/comments", GHIssueComment.class);
+        GHIssueComment r = new Requester(root).with("body", message).to(getIssuesApiRoute() + "/comments", GHIssueComment.class);
         return r.wrapUp(this);
     }
 
@@ -221,7 +221,7 @@ public class GHIssue extends GHObject {
     }
 
     protected String getIssuesApiRoute() {
-        return "/repos/"+owner.getOwnerName()+"/"+owner.getName()+"/issues/"+number;
+        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/issues/" + number;
     }
 
     public GHUser getAssignee() {

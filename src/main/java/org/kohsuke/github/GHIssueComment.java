@@ -95,6 +95,6 @@ public class GHIssueComment extends GHObject {
     }
     
     private String getApiRoute() {
-        return "/repos/"+owner.getRepository().getOwnerName()+"/"+owner.getRepository().getName()+"/issues/comments/" + id;
+        return "/repos/" + owner.getRepository().getOwnerName() + "/" + owner.getRepository().getName() + "/issues/comments/" + id;
     }
 }

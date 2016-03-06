@@ -75,7 +75,7 @@ public class GHPullRequest extends GHIssue {
 
     @Override
     protected String getApiRoute() {
-        return "/repos/"+owner.getOwnerName()+"/"+owner.getName()+"/pulls/"+number;
+        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/pulls/" + number;
     }
 
     /**
@@ -289,7 +289,10 @@ public class GHPullRequest extends GHIssue {
      *      SHA that pull request head must match to allow merge.
      */
     public void merge(String msg, String sha) throws IOException {
-        new Requester(root).method("PUT").with("commit_message",msg).with("sha",sha).to(getApiRoute()+"/merge");
+        new Requester(root).method("PUT")
+                .with("commit_message", msg)
+                .with("sha", sha)
+                .to(getApiRoute() + "/merge");
     }
 
     private void fetchIssue() throws IOException {

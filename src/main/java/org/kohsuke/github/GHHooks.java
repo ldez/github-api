@@ -21,7 +21,6 @@ class GHHooks {
         }
 
         public List<GHHook> getHooks() throws IOException {
-        	
             GHHook [] hookArray = root.retrieve().to(collection(),collectionClass());  // jdk/eclipse bug requires this to be on separate line
             List<GHHook> list = new ArrayList<GHHook>(Arrays.asList(hookArray));
             for (GHHook h : list)
@@ -36,7 +35,7 @@ class GHHooks {
 
         public GHHook createHook(String name, Map<String, String> config, Collection<GHEvent> events, boolean active) throws IOException {
             List<String> ea = null;
-            if (events!=null) {
+            if (events != null) {
               ea = new ArrayList<String>();
               for (GHEvent e : events)
                 ea.add(e.symbol());

@@ -83,7 +83,7 @@ public class GHMilestone extends GHObject {
     }
 
     protected String getApiRoute() {
-        return "/repos/"+owner.getOwnerName()+"/"+owner.getName()+"/milestones/"+number;
+        return "/repos/" + owner.getOwnerName() + "/" + owner.getName() + "/milestones/" + number;
     }
 
     public GHMilestone wrap(GHRepository repo) {

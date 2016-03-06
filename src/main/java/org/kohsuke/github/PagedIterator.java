@@ -64,7 +64,7 @@ public abstract class PagedIterator<T> implements Iterator<T> {
     public List<T> nextPage() {
         fetch();
         List<T> r = Arrays.asList(current);
-        r = r.subList(pos,r.size());
+        r = r.subList(pos, r.size());
         current = null;
         pos = 0;
         return r;

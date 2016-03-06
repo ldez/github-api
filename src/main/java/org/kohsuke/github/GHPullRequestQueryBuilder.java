@@ -25,19 +25,19 @@ public class GHPullRequestQueryBuilder extends GHQueryBuilder<GHPullRequest> {
     }
 
     public GHPullRequestQueryBuilder base(String base) {
-        req.with("base",base);
+        req.with("base", base);
         return this;
     }
 
     public GHPullRequestQueryBuilder sort(Sort sort) {
-        req.with("sort",sort);
+        req.with("sort", sort);
         return this;
     }
 
     public enum Sort { CREATED, UPDATED, POPULARITY, LONG_RUNNING }
 
-    public GHPullRequestQueryBuilder direction(GHDirection d) {
-        req.with("direction",d);
+    public GHPullRequestQueryBuilder direction(GHDirection direction) {
+        req.with("direction", direction);
         return this;
     }
 

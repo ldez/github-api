@@ -55,8 +55,10 @@ public class GHRef {
      *      Whether or not to force this ref update.
      */
     public void updateTo(String sha, Boolean force) throws IOException {
-      new Requester(root)
-          .with("sha", sha).with("force", force).method("PATCH").to(url, GHRef.class).wrap(root);
+      new Requester(root).method("PATCH")
+              .with("sha", sha)
+              .with("force", force)
+              .to(url, GHRef.class).wrap(root);
     }
 
     /**

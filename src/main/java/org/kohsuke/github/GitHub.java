@@ -386,7 +386,7 @@ public class GitHub {
      * Gets a sigle gist by ID.
      */
     public GHGist getGist(String id) throws IOException {
-        return retrieve().to("/gists/"+id,GHGist.class).wrapUp(this);
+        return retrieve().to("/gists/" + id, GHGist.class).wrapUp(this);
     }
 
     public GHGistBuilder createGist() {
@@ -415,7 +415,11 @@ public class GitHub {
      *      Use {@link #createRepository(String)} that uses a builder pattern to let you control every aspect.
      */
     public GHRepository createRepository(String name, String description, String homepage, boolean isPublic) throws IOException {
-        return createRepository(name).description(description).homepage(homepage).private_(!isPublic).create();
+        return createRepository(name)
+                .description(description)
+                .homepage(homepage)
+                .private_(!isPublic)
+                .create();
     }
 
     /**
@@ -441,12 +445,11 @@ public class GitHub {
      * @see <a href="http://developer.github.com/v3/oauth/#create-a-new-authorization">Documentation</a>
      */
     public GHAuthorization createToken(Collection<String> scope, String note, String noteUrl) throws IOException{
-        Requester requester = new Requester(this)
+        return new Requester(this).method("POST")
                 .with("scopes", scope)
                 .with("note", note)
-                .with("note_url", noteUrl);
-
-        return requester.method("POST").to("/authorizations", GHAuthorization.class).wrap(this);
+                .with("note_url", noteUrl)
+                .to("/authorizations", GHAuthorization.class).wrap(this);
     }
 
     /**

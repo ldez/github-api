@@ -306,7 +306,7 @@ class Requester {
             uc.setRequestProperty("Content-type", contentType);
 
             if (body == null) {
-                Map json = new HashMap();
+                Map<String, Object> json = new HashMap<String, Object>();
                 for (Entry e : args) {
                     json.put(e.key, e.value);
                 }

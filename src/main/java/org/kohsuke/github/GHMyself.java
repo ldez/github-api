@@ -178,8 +178,4 @@ public class GHMyself extends GHUser {
         return listRepositories();
     }
 
-//    public void addEmails(Collection<String> emails) throws IOException {
-////        new Requester(root,ApiVersion.V3).withCredential().to("/user/emails");
-//        root.retrieveWithAuth3()
-//    }
 }

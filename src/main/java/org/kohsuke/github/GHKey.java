@@ -49,6 +49,6 @@ public class GHKey {
     }
 
     public String toString() {
-        return new ToStringBuilder(this).append("title",title).append("id",id).append("key",key).toString();
+        return new ToStringBuilder(this).append("title", title).append("id", id).append("key", key).toString();
     }
 }

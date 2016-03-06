@@ -216,7 +216,7 @@ public class GHUser extends GHPerson {
     }
 
     String getApiTailUrl(String tail) {
-        if (tail.length()>0 && !tail.startsWith("/"))    tail='/'+tail;
+        if (tail.length() > 0 && !tail.startsWith("/"))    tail = '/' + tail;
         return "/users/" + login + tail;
     }
 }
