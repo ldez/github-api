@@ -56,7 +56,7 @@ public class GHUser extends GHPerson {
      * Lists the users that this user is following
      */
     @WithBridgeMethods(Set.class)
-    public GHPersonSet<GHUser> getFollows() throws IOException {
+    public GHPersonSet<GHUser> getFollows() {
         return new GHPersonSet<GHUser>(listFollows().asList());
     }
 
@@ -71,7 +71,7 @@ public class GHUser extends GHPerson {
      * Lists the users who are following this user.
      */
     @WithBridgeMethods(Set.class)
-    public GHPersonSet<GHUser> getFollowers() throws IOException {
+    public GHPersonSet<GHUser> getFollowers() {
         return new GHPersonSet<GHUser>(listFollowers().asList());
     }
 
@@ -167,7 +167,7 @@ public class GHUser extends GHPerson {
     /**
      * Lists events performed by a user (this includes private events if the caller is authenticated.
      */
-    public PagedIterable<GHEventInfo> listEvents() throws IOException {
+    public PagedIterable<GHEventInfo> listEvents() {
         return new PagedIterable<GHEventInfo>() {
             public PagedIterator<GHEventInfo> _iterator(int pageSize) {
                 return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(format("/users/%s/events", login), GHEventInfo[].class, pageSize)) {
@@ -184,7 +184,7 @@ public class GHUser extends GHPerson {
     /**
      * Lists Gists created by this user.
      */
-    public PagedIterable<GHGist> listGists() throws IOException {
+    public PagedIterable<GHGist> listGists() {
         return new PagedIterable<GHGist>() {
             public PagedIterator<GHGist> _iterator(int pageSize) {
                 return new PagedIterator<GHGist>(root.retrieve().asIterator(format("/users/%s/gists", login), GHGist[].class, pageSize)) {

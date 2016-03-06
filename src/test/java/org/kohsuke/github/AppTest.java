@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * Unit test for simple App.
  */
 public class AppTest extends AbstractGitHubApiTestBase {
-    private String getTestRepositoryName() throws IOException {
+    private String getTestRepositoryName() {
         return getUser().getLogin() + "/github-api-test";
     }
 

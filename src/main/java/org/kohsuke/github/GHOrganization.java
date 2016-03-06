@@ -52,14 +52,14 @@ public class GHOrganization extends GHPerson {
      * You use the returned builder to set various properties, then call {@link GHCreateRepositoryBuilder#create()}
      * to finally createa repository.
      */
-    public GHCreateRepositoryBuilder createRepository(String name) throws IOException {
+    public GHCreateRepositoryBuilder createRepository(String name) {
         return new GHCreateRepositoryBuilder(root, format("/orgs/%s/repos", login), name);
     }
 
     /**
      * Teams by their names.
      */
-    public Map<String,GHTeam> getTeams() throws IOException {
+    public Map<String,GHTeam> getTeams() {
         Map<String,GHTeam> r = new TreeMap<String, GHTeam>();
         for (GHTeam t : listTeams()) {
             r.put(t.getName(),t);
@@ -70,7 +70,7 @@ public class GHOrganization extends GHPerson {
     /**
      * List up all the teams.
      */
-    public PagedIterable<GHTeam> listTeams() throws IOException {
+    public PagedIterable<GHTeam> listTeams() {
         return new PagedIterable<GHTeam>() {
             public PagedIterator<GHTeam> _iterator(int pageSize) {
                 return new PagedIterator<GHTeam>(root.retrieve().asIterator(format("/orgs/%s/teams", login), GHTeam[].class, pageSize)) {
@@ -87,7 +87,7 @@ public class GHOrganization extends GHPerson {
     /**
      * Finds a team that has the given name in its {@link GHTeam#getName()}
      */
-    public GHTeam getTeamByName(String name) throws IOException {
+    public GHTeam getTeamByName(String name) {
         for (GHTeam t : listTeams()) {
             if(t.getName().equals(name))
                 return t;
@@ -137,33 +137,33 @@ public class GHOrganization extends GHPerson {
     /**
      * @deprecated use {@link #listMembers()}
      */
-    public List<GHUser> getMembers() throws IOException {
+    public List<GHUser> getMembers() {
         return listMembers().asList();
     }
 
     /**
      * All the members of this organization.
      */
-    public PagedIterable<GHUser> listMembers() throws IOException {
+    public PagedIterable<GHUser> listMembers() {
         return listMembers("members");
     }
 
     /**
      * All the public members of this organization.
      */
-    public PagedIterable<GHUser> listPublicMembers() throws IOException {
+    public PagedIterable<GHUser> listPublicMembers() {
         return listMembers("public_members");
     }
 
-    private PagedIterable<GHUser> listMembers(String suffix) throws IOException {
+    private PagedIterable<GHUser> listMembers(String suffix) {
         return listMembers(suffix, null);
     }
 
-    public PagedIterable<GHUser> listMembersWithFilter(String filter) throws IOException {
+    public PagedIterable<GHUser> listMembersWithFilter(String filter) {
         return listMembers("members", filter);
     }
 
-    private PagedIterable<GHUser> listMembers(final String suffix, final String filter) throws IOException {
+    private PagedIterable<GHUser> listMembers(final String suffix, final String filter) {
         return new PagedIterable<GHUser>() {
             public PagedIterator<GHUser> _iterator(int pageSize) {
                 String filterParams = (filter == null) ? "" : ("?filter=" + filter);
@@ -235,7 +235,7 @@ public class GHOrganization extends GHPerson {
     /**
      * Lists events performed by a user (this includes private events if the caller is authenticated.
      */
-    public PagedIterable<GHEventInfo> listEvents() throws IOException {
+    public PagedIterable<GHEventInfo> listEvents() {
         return new PagedIterable<GHEventInfo>() {
             public PagedIterator<GHEventInfo> _iterator(int pageSize) {
                 return new PagedIterator<GHEventInfo>(root.retrieve().asIterator(format("/orgs/%s/events", login), GHEventInfo[].class, pageSize)) {

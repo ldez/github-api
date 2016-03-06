@@ -52,7 +52,7 @@ public abstract class GHPerson extends GHObject {
      * To list your own repositories, including private repositories,
      * use {@link GHMyself#listRepositories()}
      */
-    public synchronized Map<String,GHRepository> getRepositories() throws IOException {
+    public synchronized Map<String,GHRepository> getRepositories() {
         Map<String,GHRepository> repositories = new TreeMap<String, GHRepository>();
         for (GHRepository r : listRepositories()) {
             repositories.put(r.getName(),r);
@@ -144,7 +144,7 @@ public abstract class GHPerson extends GHObject {
     /**
      * Lists events for an organization or an user.
      */
-    public abstract PagedIterable<GHEventInfo> listEvents() throws IOException;
+    public abstract PagedIterable<GHEventInfo> listEvents();
 
     /**
      * Gravatar ID of this user, like 0cb9832a01c22c083390f3c5dcb64105

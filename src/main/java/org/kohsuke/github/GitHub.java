@@ -306,7 +306,7 @@ public class GitHub {
     /**
      * Interns the given {@link GHUser}.
      */
-    protected GHUser getUser(GHUser orig) throws IOException {
+    protected GHUser getUser(GHUser orig) {
         GHUser u = users.get(orig.getLogin());
         if (u==null) {
             orig.root = this;
@@ -456,7 +456,7 @@ public class GitHub {
     /**
      * Ensures that the credential is valid.
      */
-    public boolean isCredentialValid() throws IOException {
+    public boolean isCredentialValid() {
         try {
             retrieve().to("/user", GHUser.class);
             return true;

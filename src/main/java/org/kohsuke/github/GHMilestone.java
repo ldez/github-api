@@ -39,7 +39,7 @@ public class GHMilestone extends GHObject {
     /**
      * When was this milestone closed?
      */
-    public Date getClosedAt() throws IOException {
+    public Date getClosedAt() {
         return GitHub.parseDate(closed_at);
     }
 

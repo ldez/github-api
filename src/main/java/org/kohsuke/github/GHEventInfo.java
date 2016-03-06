@@ -81,7 +81,7 @@ public class GHEventInfo {
     /**
      * Quick way to just get the actor of the login.
      */
-    public String getActorLogin() throws IOException {
+    public String getActorLogin() {
         return actor.getLogin();
     }
 

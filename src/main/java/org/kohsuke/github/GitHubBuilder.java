@@ -72,7 +72,7 @@ public class GitHubBuilder {
      *      Use {@link #fromEnvironment()} to pick up standard set of environment variables, so that
      *      different clients of this library will all recognize one consistent set of coordinates.
      */
-    public static GitHubBuilder fromEnvironment(String loginVariableName, String passwordVariableName, String oauthVariableName) throws IOException {
+    public static GitHubBuilder fromEnvironment(String loginVariableName, String passwordVariableName, String oauthVariableName) {
         return fromEnvironment(loginVariableName, passwordVariableName, oauthVariableName, "");
     }
 
@@ -87,7 +87,7 @@ public class GitHubBuilder {
      *      Use {@link #fromEnvironment()} to pick up standard set of environment variables, so that
      *      different clients of this library will all recognize one consistent set of coordinates.
      */
-    public static GitHubBuilder fromEnvironment(String loginVariableName, String passwordVariableName, String oauthVariableName, String endpointVariableName) throws IOException {
+    public static GitHubBuilder fromEnvironment(String loginVariableName, String passwordVariableName, String oauthVariableName, String endpointVariableName) {
         Properties env = new Properties();
         loadIfSet(loginVariableName,env,"login");
         loadIfSet(passwordVariableName,env,"password");
@@ -116,7 +116,7 @@ public class GitHubBuilder {
      * For backward compatibility, the following environment variables are recognized but discouraged:
      * login, password, oauth
      */
-    public static GitHubBuilder fromEnvironment() throws IOException {
+    public static GitHubBuilder fromEnvironment() {
         Properties props = new Properties();
         for (Entry<String, String> e : System.getenv().entrySet()) {
             String name = e.getKey().toLowerCase(Locale.ENGLISH);

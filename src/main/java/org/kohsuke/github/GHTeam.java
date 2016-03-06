@@ -52,7 +52,7 @@ public class GHTeam {
     /**
      * Retrieves the current members.
      */
-    public PagedIterable<GHUser> listMembers() throws IOException {
+    public PagedIterable<GHUser> listMembers() {
         return new PagedIterable<GHUser>() {
             public PagedIterator<GHUser> _iterator(int pageSize) {
                 return new PagedIterator<GHUser>(org.root.retrieve().asIterator(api("/members"), GHUser[].class, pageSize)) {
@@ -65,7 +65,7 @@ public class GHTeam {
         };
     }
 
-    public Set<GHUser> getMembers() throws IOException {
+    public Set<GHUser> getMembers() {
         return Collections.unmodifiableSet(listMembers().asSet());
     }
 
@@ -81,7 +81,7 @@ public class GHTeam {
         }
     }
 
-    public Map<String,GHRepository> getRepositories() throws IOException {
+    public Map<String,GHRepository> getRepositories() {
         Map<String,GHRepository> m = new TreeMap<String, GHRepository>();
         for (GHRepository r : listRepositories()) {
             m.put(r.getName(), r);

@@ -196,14 +196,14 @@ public class GHIssue extends GHObject {
      * 
      * @see #listComments() 
      */
-    public List<GHIssueComment> getComments() throws IOException {
+    public List<GHIssueComment> getComments() {
         return listComments().asList();
     }
     
     /**
      * Obtains all the comments associated with this issue.
      */
-    public PagedIterable<GHIssueComment> listComments() throws IOException {
+    public PagedIterable<GHIssueComment> listComments() {
         return new PagedIterable<GHIssueComment>() {
             public PagedIterator<GHIssueComment> _iterator(int pageSize) {
                 return new PagedIterator<GHIssueComment>(root.retrieve().asIterator(getIssuesApiRoute() + "/comments", GHIssueComment[].class, pageSize)) {
